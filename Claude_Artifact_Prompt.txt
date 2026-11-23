@@ -1,0 +1,41 @@
+Build a single self-contained HTML artifact: an interactive engineering design document for my project, titled “SenseSafe — IoT-Based LPG Leakage Detection and Alert System”. Use only the project facts below; do not invent measured results, component specifications, supplier prices, wiring or behaviour beyond what is stated.
+
+## PROJECT FACTS
+- What it is: A proposal-stage IoT mechatronic prototype intended to monitor changes in LPG/combustible-gas response using an MQ-2 module and an ESP32-C3 SuperMini, provide local buzzer/LED warnings in the planned hardware build, show status on the integrated 0.42-inch OLED, and serve a simulated telemetry dashboard from the ESP32 over Wi-Fi.
+- Context: Air University, Department of Mechatronics Engineering. Project team: Husnain Shaheen (2600847), Minahil Masood (2600838), Muhammad Waleed bin Mahmood (2600832). Section A. Supervisor: Umer Farooq. Document number ICT-MTS-SS-001. Revision 1.0. Date 22 November 2026.
+- Build scope: One benchtop ESP32-C3 SuperMini with integrated 0.42-inch OLED, one MQ-2 gas sensor module, buzzer module, LED, 220-ohm LED resistor, breadboard, jumper wires, USB-C cable, and proposed 12 kΩ / 10 kΩ divider plus regulated 5 V supply. Proposal-stage dashboard data is simulated; physical sensor telemetry is not connected yet. Future commercial version would require a calibrated/selective sensor, enclosure, backup supply, diagnostics and appropriate certification.
+- Key features: (1) MQ-2 analogue monitoring concept, (2) local audible/visual warning concept, (3) 0.42-inch OLED status display, (4) ESP32-hosted web portfolio and simulated telemetry dashboard.
+- Hardware: ESP32-C3 SuperMini with 0.42-inch OLED; MQ-2 module powered from regulated 5 V; proposed analogue output divider 12 kΩ from MQ-2 AO to ADC node and 10 kΩ from ADC node to GND; proposed ADC GPIO0 / ADC1_CH0; buzzer control proposed on GPIO3 (driver and polarity must be confirmed); LED proposed on GPIO4 through 220 Ω; common OLED variant is SSD1306-compatible 72×40 I²C with SDA GPIO5, SCL GPIO6, address 0x3C, but exact board revision must be verified. Web interface is served by ESP32 WebServer from LittleFS; browser uses HTTP GET /api/telemetry and GET /api/demo?state=normal|warning|fault. The dashboard and firmware are simulation-only for this proposal stage.
+- Target market / region: Pakistan, initially domestic kitchens and small commercial environments; parts intended to be locally available.
+- Known limitations and corrections: The original component list named Arduino UNO R4 WiFi, but the selected controller is ESP32-C3 SuperMini OLED. MQ-2 is broad-response and cross-sensitive, not LPG-selective; raw ADC values are not ppm. MQ-2 warm-up and calibration are required. Never connect a potentially 5 V AO signal directly to the 3.3 V ESP32-C3 ADC. The proposed 12 kΩ / 10 kΩ divider converts 5 V to about 2.27 V. The OLED pin mapping is common to this board family but must be checked on the exact revision. This is an educational prototype, not a certified life-safety detector.
+
+## DOCUMENT STRUCTURE
+1. Overview: title block, team, supervisor, document number, date, 3 objective cards and prototype/full-scale comparison.
+2. Design approach: system principles, practical mechanical/electrical approach and corrections table (Was / Now).
+3. Architecture: inline SVG layered diagram and protocols on each link.
+4. Block diagram: inline SVG with every signal/bus labelled and power drawn separately.
+5. Flowcharts: main monitoring flow, warning/fault flow and web-server simulation flow; do not include payment flows.
+6. System design & specifications: structured tables (Component → Interface → Function → Operating Rule).
+7. 3D model: Three.js primitive-geometry model of a small wall/tabletop detector enclosure with visible MQ-2 sensing head, OLED window, LED, buzzer opening and ESP32 board; include orbit controls, iso/front/side/back/top presets, exploded view, solid/x-ray/wireframe toggle and part labels. Clearly mark it conceptual, not dimensionally verified.
+8. Virtual demo: functional simulation with normal, warning and sensor-fault states, sample telemetry, output indicators and event log. Explicitly state no physical sensor is connected.
+9. Bill of materials: item, quantity, estimated PKR, price basis and total; separate existing owned ESP32 board replacement value from additional cash estimate. Use: ESP32-C3 OLED board 1,650; MQ-2 390; active buzzer module 90; breadboard+jumpers 460; USB-C data cable estimate 250; LED+220Ω estimate 30; 12kΩ+10kΩ resistors estimate 20; regulated 5V ≥1A supply estimate 500. Estimated replacement total 3,390 PKR; estimated additional cash (excluding already-owned controller) 1,740 PKR, before delivery. Clearly identify estimates and recheck stock.
+
+## ENGINEERING RULES
+- Treat all timing numbers as proposed targets, not achieved results: sample interval ≤1 s; local warning target ≤2 s after a persistent threshold crossing; web dashboard refresh target ≤5 s when connected.
+- Raw ADC units only; never label raw reading as ppm or calibrated concentration.
+- Every signal/command should have an ID and example JSON.
+- Include no-Wi-Fi fallback, sensor fault state, warm-up state, retry/timeout behaviour and safe defaults.
+- Show 5 V sensor power separately from signal wiring and common ground.
+- Do not claim physical outputs work in this proposal-stage simulation.
+
+## DESIGN / TECHNICAL CONSTRAINTS
+- Technical drawing / engineering document aesthetic, not a marketing page.
+- Inline CSS and JS; inline SVG diagrams.
+- Use Three.js r128 and OrbitControls 0.128.0 only from cdnjs.cloudflare.com or cdn.jsdelivr.net, pinned versions.
+- No localStorage, no network calls from the artifact, no remote images.
+- The artifact must remain useful if the Three.js CDN is unavailable: show an explanatory fallback panel.
+- Responsive design, keyboard-visible focus, reduced-motion support, accessible labels and explicit body background.
+- Keep the file compact and self-contained except the permitted pinned 3D libraries.
+
+OUTPUT
+Generate the complete artifact and provide a downloadable single .html file. At the end, state that this is a proposal-stage design and list the assumptions that need physical verification. Do not claim that the hardware has been assembled or tested.
